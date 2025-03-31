@@ -4,13 +4,13 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.ltt204.profileservice.dto.request.UserProfileCreateRequestDto;
-import org.ltt204.profileservice.dto.request.UserProfileUpdateRequestDto;
+import org.ltt204.profileservice.dto.request.userprofile.UserProfileCreateRequestDto;
+import org.ltt204.profileservice.dto.request.userprofile.UserProfileUpdateRequestDto;
 import org.ltt204.profileservice.dto.response.common.ApplicationResponseDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDetailDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDto;
 import org.ltt204.profileservice.mapper.UserProfileMapper;
-import org.ltt204.profileservice.service.UserProfileServiceImpl;
+import org.ltt204.profileservice.service.implementations.UserProfileServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

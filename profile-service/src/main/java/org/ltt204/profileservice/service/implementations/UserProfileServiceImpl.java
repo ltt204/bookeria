@@ -1,11 +1,11 @@
-package org.ltt204.profileservice.service;
+package org.ltt204.profileservice.service.implementations;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.ltt204.profileservice.dto.request.UserProfileCreateRequestDto;
-import org.ltt204.profileservice.dto.request.UserProfileUpdateRequestDto;
+import org.ltt204.profileservice.dto.request.userprofile.UserProfileCreateRequestDto;
+import org.ltt204.profileservice.dto.request.userprofile.UserProfileUpdateRequestDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDetailDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDto;
 import org.ltt204.profileservice.exception.AppException;

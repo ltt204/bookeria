@@ -1,7 +1,7 @@
 package org.ltt204.profileservice.service.interfaces;
 
-import org.ltt204.profileservice.dto.request.UserProfileCreateRequestDto;
-import org.ltt204.profileservice.dto.request.UserProfileUpdateRequestDto;
+import org.ltt204.profileservice.dto.request.userprofile.UserProfileCreateRequestDto;
+import org.ltt204.profileservice.dto.request.userprofile.UserProfileUpdateRequestDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDetailDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDto;
 

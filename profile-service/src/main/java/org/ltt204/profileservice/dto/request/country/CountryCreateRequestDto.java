@@ -1,4 +1,4 @@
-package org.ltt204.profileservice.dto.request;
+package org.ltt204.profileservice.dto.request.country;
 
 
 import lombok.*;

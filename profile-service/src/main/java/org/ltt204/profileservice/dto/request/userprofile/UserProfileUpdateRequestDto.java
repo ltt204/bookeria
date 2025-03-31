@@ -1,7 +1,8 @@
-package org.ltt204.profileservice.dto.request;
+package org.ltt204.profileservice.dto.request.userprofile;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.ltt204.profileservice.dto.request.address.AddressUpdateRequestDto;
 
 @Data
 @Builder
@@ -12,5 +13,5 @@ public class UserProfileUpdateRequestDto {
     String firstName;
     String lastName;
     String email;
-    AddressCreateRequestDto address;
+    AddressUpdateRequestDto address;
 }

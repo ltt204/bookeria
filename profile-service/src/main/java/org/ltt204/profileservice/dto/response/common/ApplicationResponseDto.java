@@ -1,12 +1,12 @@
 package org.ltt204.profileservice.dto.response.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.ltt204.profileservice.exception.ErrorCode;
-import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+import org.ltt204.profileservice.exception.ErrorCode;
+import org.springframework.lang.Nullable;
 
 @Data
 @Builder(toBuilder = true)

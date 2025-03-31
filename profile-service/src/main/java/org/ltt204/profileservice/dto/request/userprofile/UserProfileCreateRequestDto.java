@@ -1,8 +1,9 @@
-package org.ltt204.profileservice.dto.request;
+package org.ltt204.profileservice.dto.request.userprofile;
 
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.ltt204.profileservice.dto.request.address.AddressCreateRequestDto;
 
 @Data
 @Builder
