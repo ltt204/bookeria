@@ -3,6 +3,7 @@ package org.ltt204.profileservice.dto.request.address;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.ltt204.profileservice.dto.request.country.CountryCreateRequestDto;
+import org.ltt204.profileservice.dto.request.country.CountryUpdateRequestDto;
 
 @Data
 @Builder
@@ -15,5 +16,5 @@ public class AddressUpdateRequestDto {
     String district;
     String province;
     String city;
-    CountryCreateRequestDto country;
+    CountryUpdateRequestDto country;
 }
