@@ -5,6 +5,7 @@ import org.ltt204.profileservice.dto.request.userprofile.UserProfileUpdateReques
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDetailDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDto;
 import org.ltt204.profileservice.entity.UserProfile;
+import org.ltt204.profileservice.events.consumers.UserCreatedEvent;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

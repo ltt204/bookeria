@@ -15,6 +15,7 @@ public enum ErrorCode {
     // 1xxx
     INVALID_ERROR_KEY(1001, "Invalid error key", HttpStatus.INTERNAL_SERVER_ERROR),
     INVALID_TOKEN_FORMAT(1002, "Invalid token format", HttpStatus.BAD_REQUEST),
+    RABBITMQ_CONSUMER_ERROR(1003, "Error while consuming event", HttpStatus.INTERNAL_SERVER_ERROR),
     // 2xxx
     FIRSTNAME_REQUIRED(2000, "Firstname is required", HttpStatus.BAD_REQUEST),
     LASTNAME_REQUIRED(2001, "Lastname is required", HttpStatus.BAD_REQUEST),

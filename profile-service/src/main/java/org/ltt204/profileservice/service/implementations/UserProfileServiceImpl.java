@@ -1,5 +1,6 @@
 package org.ltt204.profileservice.service.implementations;
 
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -8,6 +9,10 @@ import org.ltt204.profileservice.dto.request.userprofile.UserProfileCreateReques
 import org.ltt204.profileservice.dto.request.userprofile.UserProfileUpdateRequestDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDetailDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDto;
+import org.ltt204.profileservice.entity.UserProfile;
+import org.ltt204.profileservice.events.consumers.UserCreatedEvent;
+import org.ltt204.profileservice.events.consumers.UserDeletedEvent;
+import org.ltt204.profileservice.events.consumers.UserUpdatedEvent;
 import org.ltt204.profileservice.exception.AppException;
 import org.ltt204.profileservice.exception.ErrorCode;
 import org.ltt204.profileservice.mapper.UserProfileMapper;
@@ -22,6 +27,57 @@ import org.springframework.stereotype.Service;
 public class UserProfileServiceImpl implements UserProfileService {
     UserProfileRepository userProfileRepository;
     UserProfileMapper userProfileMapper;
+
+    @Override
+    @Transactional
+    public void createUserProfileFromEvent(UserCreatedEvent userCreatedEvent) {
+        log.info("Received UserCreatedEvent: {}", userCreatedEvent.getUserId());
+
+        if (userProfileRepository.existsById(userCreatedEvent.getUserId())) {
+            throw new AppException(ErrorCode.CONFLICT, "Profile is already created for user with id " + userCreatedEvent.getUserId());
+        }
+
+        var userProfile = UserProfile.builder()
+                .id(userCreatedEvent.getUserId())
+                .email(userCreatedEvent.getUsername())
+                .firstName(userCreatedEvent.getFirstname())
+                .lastName(userCreatedEvent.getLastname())
+                .dateOfBirth(userCreatedEvent.getDateOfBirth())
+                .build();
+
+        userProfileRepository.save(userProfile);
+    }
+
+    @Override
+    @Transactional
+    public void updateUserProfile(UserUpdatedEvent userUpdatedEvent) {
+        log.info("Received UserUpdatedEvent: {}", userUpdatedEvent.getUserId());
+
+        if (!userProfileRepository.existsById(userUpdatedEvent.getUserId())) {
+            throw new AppException(ErrorCode.CONFLICT, String.format("Profile with %s can not be found ", userUpdatedEvent.getUserId()));
+        }
+
+        var userProfile = UserProfile.builder()
+                .id(userUpdatedEvent.getUserId())
+                .email(userUpdatedEvent.getUsername())
+                .firstName(userUpdatedEvent.getFirstname())
+                .lastName(userUpdatedEvent.getLastname())
+                .dateOfBirth(userUpdatedEvent.getDateOfBirth())
+                .build();
+
+        userProfileRepository.save(userProfile);
+    }
+
+    @Override
+    public void deleteUserProfile(UserDeletedEvent userDeletedEvent) {
+        log.info("Received UserDeletedEvent: {}", userDeletedEvent.getUserId());
+
+        if (!userProfileRepository.existsById(userDeletedEvent.getUserId())) {
+            throw new AppException(ErrorCode.CONFLICT, String.format("Profile with %s can not be found ", userDeletedEvent.getUserId()));
+        }
+
+        userProfileRepository.deleteById(userDeletedEvent.getUserId());
+    }
 
     @Override
     public UserProfileDetailDto createUserProfile(UserProfileCreateRequestDto userProfileCreateRequestDto) {
