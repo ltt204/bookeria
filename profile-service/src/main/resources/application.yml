@@ -24,7 +24,7 @@ spring:
 server:
   port: 8081
   servlet:
-    context-path: /profile-service
+    context-path: /profile
 
 producer-service:
   domain: identity
@@ -36,10 +36,13 @@ producer-service:
 
 identity-service:
   identity:
-  created:
-    queue: identity-service.identity.created.queue
-  updated:
-    queue: identity-service.identity.updated.queue
-  deleted:
-    queue: identity-service.identity.deleted.queue
+    created:
+      queue: identity-service.identity.created.queue
+    updated:
+      queue: identity-service.identity.updated.queue
+    deleted:
+      queue: identity-service.identity.deleted.queue
 
+eureka:
+  client:
+    eureka-server-port: 8761

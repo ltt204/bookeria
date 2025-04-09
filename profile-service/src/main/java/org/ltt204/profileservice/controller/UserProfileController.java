@@ -22,19 +22,6 @@ import org.springframework.web.bind.annotation.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserProfileController {
     UserProfileServiceImpl profileService;
-    UserProfileMapper userProfileMapper;
-
-    @PostMapping
-    public ResponseEntity<ApplicationResponseDto<UserProfileDetailDto>> createUserProfile(
-            @RequestBody UserProfileCreateRequestDto userProfileCreateRequestDto
-    ) {
-        var newUser = profileService.createUserProfile(userProfileCreateRequestDto);
-
-        var response = ApplicationResponseDto.success(newUser);
-
-        return ResponseEntity.ok(response);
-    }
-
     @GetMapping("/{userId}")
     public ResponseEntity<ApplicationResponseDto<UserProfileDetailDto>> getUserProfile(
             @PathVariable String userId

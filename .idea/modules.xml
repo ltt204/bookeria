@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/bookeria.iml" filepath="$PROJECT_DIR$/bookeria.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/identity-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/identity-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/profile-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/profile-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/profile.main.iml" filepath="$PROJECT_DIR$/.idea/modules/profile.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/profile.test.iml" filepath="$PROJECT_DIR$/.idea/modules/profile.test.iml" />
     </modules>

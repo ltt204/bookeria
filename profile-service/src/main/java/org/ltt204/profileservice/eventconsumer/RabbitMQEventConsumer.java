@@ -1,4 +1,4 @@
-package org.ltt204.profileservice.publisher;
+package org.ltt204.profileservice.eventconsumer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -10,7 +10,6 @@ import org.ltt204.profileservice.exception.AppException;
 import org.ltt204.profileservice.exception.ErrorCode;
 import org.ltt204.profileservice.service.interfaces.UserProfileService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -21,7 +20,7 @@ public class RabbitMQEventConsumer implements IEventConsumer {
     UserProfileService userProfileService;
 
     @Override
-    @RabbitListener(queues = "${identity-service.created.queue}")
+    @RabbitListener(queues = "${identity-service.identity.created.queue}")
     public void consumeEvent(UserCreatedEvent event) {
         try {
             log.info("Received UserCreatedEvent: {}", event);
