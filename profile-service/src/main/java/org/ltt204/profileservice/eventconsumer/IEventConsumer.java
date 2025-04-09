@@ -1,4 +1,4 @@
-package org.ltt204.profileservice.publisher;
+package org.ltt204.profileservice.eventconsumer;
 
 import org.ltt204.profileservice.events.consumers.UserCreatedEvent;
 import org.ltt204.profileservice.events.consumers.UserDeletedEvent;
