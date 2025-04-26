@@ -20,12 +20,12 @@ pipeline {
                 '''
             }
         }
-        stage('Deliver') {
+        stage('Dep[loy]') {
             steps {
                 echo 'Deploying automation Deploy-staging...'
                 // Add your deploy commands here
                 sh '''
-                    echo 'Delivering the project...'
+                    echo 'Deploying the project for testing webhook...'
                 '''
             }
         }                                           
