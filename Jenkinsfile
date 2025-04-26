@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                echo 'Deliver...'
+                echo 'Deploying automation Deploy-staging...'
                 // Add your deploy commands here
                 sh '''
                     echo 'Delivering the project...'
