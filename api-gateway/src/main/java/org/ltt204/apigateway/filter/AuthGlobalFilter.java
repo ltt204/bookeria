@@ -5,14 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.ltt204.apigateway.client.IdentityClient;
 import org.ltt204.apigateway.dto.request.token.IntrospectRequestDto;
 import org.ltt204.apigateway.dto.response.common.ApplicationResponseDto;
 import org.ltt204.apigateway.exception.AppException;
 import org.ltt204.apigateway.exception.ErrorCode;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +22,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.util.Arrays;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -33,14 +33,18 @@ public class AuthGlobalFilter implements GlobalFilter {
     IdentityClient identityClient;
     ObjectMapper objectMapper;
 
+    private final String[] EXCLUDED_PATHS = {
+            "/identity/auth/.*",
+            "/identity/users/signup",
+    };
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.info("AuthGlobalFilter start");
         log.info("Request path {}", exchange.getRequest().getURI().getPath());
-        if (
-                exchange.getRequest().getURI().getPath().matches("/identity/public/auth/.*")
-        )
+        if (Arrays.stream(EXCLUDED_PATHS).anyMatch(path -> exchange.getRequest().getURI().getPath().matches(path))) {
             return chain.filter(exchange);
+        }
 
         HttpHeaders headers = exchange.getRequest().getHeaders();
 

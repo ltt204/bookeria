@@ -18,7 +18,13 @@ import org.ltt204.profileservice.exception.ErrorCode;
 import org.ltt204.profileservice.mapper.UserProfileMapper;
 import org.ltt204.profileservice.repository.UserProfileRepository;
 import org.ltt204.profileservice.service.interfaces.UserProfileService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -83,6 +89,23 @@ public class UserProfileServiceImpl implements UserProfileService {
     public UserProfileDetailDto createUserProfile(UserProfileCreateRequestDto userProfileCreateRequestDto) {
         var userProfile = userProfileMapper.toEntity(userProfileCreateRequestDto);
         return userProfileMapper.toDetailDto(userProfileRepository.save(userProfile));
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserProfileDto> getAllUserProfiles(Pageable pageable) {
+        return userProfileRepository.findAll(
+                        PageRequest.of(
+                                pageable.getPageNumber(),
+                                pageable.getPageSize(),
+                                pageable.getSortOr(
+                                        Sort.by(Sort.Direction.ASC, "firstName")
+                                )
+                        )
+                )
+                .stream().map(
+                        userProfileMapper::toDto
+                ).toList();
     }
 
     @Override

@@ -7,10 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.ltt204.profileservice.dto.request.userprofile.UserProfileCreateRequestDto;
 import org.ltt204.profileservice.dto.request.userprofile.UserProfileUpdateRequestDto;
 import org.ltt204.profileservice.dto.response.common.ApplicationResponseDto;
+import org.ltt204.profileservice.dto.response.common.ListResponse;
+import org.ltt204.profileservice.dto.response.common.PageDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDetailDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDto;
 import org.ltt204.profileservice.mapper.UserProfileMapper;
 import org.ltt204.profileservice.service.implementations.UserProfileServiceImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +25,31 @@ import org.springframework.web.bind.annotation.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserProfileController {
     UserProfileServiceImpl profileService;
+
+    @GetMapping
+    public ResponseEntity<ApplicationResponseDto<ListResponse<UserProfileDto>>> getUserProfiles(
+            Pageable pageable
+    ) {
+        log.info("getUserProfiles");
+        var userProfiles = profileService.getAllUserProfiles(pageable);
+
+        var page = PageDto.builder()
+                .pageNumber(pageable.getPageNumber())
+                .pageSize(pageable.getPageSize())
+                .totalElements(userProfiles.size())
+                .totalPages((int) Math.ceil((double) userProfiles.size() / pageable.getPageSize()))
+                .build();
+
+        var response = ApplicationResponseDto.success(
+                ListResponse.<UserProfileDto>builder()
+                        .data(userProfiles)
+                        .page(page)
+                        .build()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity<ApplicationResponseDto<UserProfileDetailDto>> getUserProfile(
             @PathVariable String userId

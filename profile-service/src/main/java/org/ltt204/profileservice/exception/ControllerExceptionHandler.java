@@ -3,6 +3,7 @@ package org.ltt204.profileservice.exception;
 import org.ltt204.profileservice.dto.response.common.ApplicationResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -46,6 +47,15 @@ public class ControllerExceptionHandler {
     ResponseEntity<ApplicationResponseDto<?>> handlingAppException(AppException exception) {
         var error = exception.getError();
         var response = ApplicationResponseDto.failure(error, exception.getMessage());
+        return ResponseEntity.status(error.getHttpStatusCode()).body(response);
+    }
+
+
+    @ExceptionHandler(value = AuthorizationDeniedException.class)
+    ResponseEntity<ApplicationResponseDto<?>> handlingAuthorizeException(AuthorizationDeniedException exception) {
+        var error = ErrorCode.UNAUTHORIZED;
+        var response = ApplicationResponseDto.failure(error);
+
         return ResponseEntity.status(error.getHttpStatusCode()).body(response);
     }
 
