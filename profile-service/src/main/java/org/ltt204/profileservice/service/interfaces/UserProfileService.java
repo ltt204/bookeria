@@ -7,6 +7,9 @@ import org.ltt204.profileservice.dto.response.userprofile.UserProfileDto;
 import org.ltt204.profileservice.events.consumers.UserCreatedEvent;
 import org.ltt204.profileservice.events.consumers.UserDeletedEvent;
 import org.ltt204.profileservice.events.consumers.UserUpdatedEvent;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface UserProfileService {
     /**
@@ -37,6 +40,13 @@ public interface UserProfileService {
      * @return the created user profile DTO
      */
     UserProfileDetailDto createUserProfile(UserProfileCreateRequestDto userProfileCreateRequestDto);
+
+    /**
+     * Get all user profiles.
+     *
+     * @return the list of user profile DTOs
+     */
+    List<UserProfileDto> getAllUserProfiles(Pageable pageable);
 
     /**
      * Get a user profile by ID.
