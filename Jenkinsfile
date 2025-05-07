@@ -48,7 +48,7 @@ pipeline {
                         env.SERVICE_REGISTRY_CHANGED = 'true'
                     } else {
                         try {
-                            def currentCommit = sh(scipt: "giv rev-parse HEAD", returnStdout: true).trim()
+                            def currentCommit = sh(script: "giv rev-parse HEAD", returnStdout: true).trim()
 
                             def previousCommit = ""
                             if (currentBuild.previousSuccessBuild == null) {
