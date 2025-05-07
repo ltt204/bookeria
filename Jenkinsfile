@@ -83,7 +83,7 @@ pipeline {
                             currentBuild.result = 'ABORTED'
                             error("No changes detected in the api-gateway directory.")
                         }
-                    } catch {
+                    } catch (Exception e) {
                         echo "Error while checking for changes: ${it}"
                         currentBuild.result = 'FAILURE'
                         error("Error while checking for changes.")
