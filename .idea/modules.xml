@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/api-gateway.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/bookeria.iml" filepath="$PROJECT_DIR$/bookeria.iml" />
+      <module fileurl="file://$PROJECT_DIR$/catalog-service/catalog-service.iml" filepath="$PROJECT_DIR$/catalog-service/catalog-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/identity-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/identity-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/profile-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/profile-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/profile.main.iml" filepath="$PROJECT_DIR$/.idea/modules/profile.main.iml" />
