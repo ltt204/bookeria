@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         // Define the tools you want to use
-        maven 'Maven 3.6.3'
+        maven 'Maven 3.9.6'
         jdk 'JDK 17'
     }
 
@@ -30,67 +30,69 @@ pipeline {
         }
 
         stage('Detect Changes') {
-            script {
-                // Init changed flags
-                env.API_GATEWAY_CHANGED = 'false'
-                // env.CATALOG_SERVICE_CHANGED = 'false'
-                env.IDENTITY_SERVICE_CHANGED = 'false'
-                env.PROFILE_SERVICE_CHANGED = 'false'
-                env.SERVICE_REGISTRY_CHANGED = 'false'
-                
-                // If first build, set the environment variable to true
-                if (params.FORCE_BUILD_ALL == true || currentBuild.previousBuild == null) {
-                    env.API_GATEWAY_CHANGED = 'true'
-                    // env.CATALOG_SERVICE_CHANGED = 'true'
-                    env.IDENTITY_SERVICE_CHANGED = 'true'
-                    env.PROFILE_SERVICE_CHANGED = 'true'
-                    env.SERVICE_REGISTRY_CHANGED = 'true'
-                } else {
-                    try {
-                        def currentCommit = sh(scipt: "giv rev-parse HEAD", returnStdout: true).trim()
+            steps {
+                script {
+                    // Init changed flags
+                    env.API_GATEWAY_CHANGED = 'false'
+                    // env.CATALOG_SERVICE_CHANGED = 'false'
+                    env.IDENTITY_SERVICE_CHANGED = 'false'
+                    env.PROFILE_SERVICE_CHANGED = 'false'
+                    env.SERVICE_REGISTRY_CHANGED = 'false'
+                    
+                    // If first build, set the environment variable to true
+                    if (params.FORCE_BUILD_ALL == true || currentBuild.previousBuild == null) {
+                        env.API_GATEWAY_CHANGED = 'true'
+                        // env.CATALOG_SERVICE_CHANGED = 'true'
+                        env.IDENTITY_SERVICE_CHANGED = 'true'
+                        env.PROFILE_SERVICE_CHANGED = 'true'
+                        env.SERVICE_REGISTRY_CHANGED = 'true'
+                    } else {
+                        try {
+                            def currentCommit = sh(scipt: "giv rev-parse HEAD", returnStdout: true).trim()
 
-                        def previousCommit = ""
-                        if (currentBuild.previousSuccessBuild == null) {
-                            previousCommit = currentBuild.previousSuccessfulBuild.getEnvironment().get("GIT_COMMIT")
-                            if (!previousCommit) {
-                                previousCommit = sh(script: "git rev-parse HEAD~1", returnStdout: true).trim()
-                            }                        } else {
-                            previousCommit = currentBuild.previousBuild.getEnvironment().get("GIT_COMMIT")
+                            def previousCommit = ""
+                            if (currentBuild.previousSuccessBuild == null) {
+                                previousCommit = currentBuild.previousSuccessfulBuild.getEnvironment().get("GIT_COMMIT")
+                                if (!previousCommit) {
+                                    previousCommit = sh(script: "git rev-parse HEAD~1", returnStdout: true).trim()
+                                }                        } else {
+                                previousCommit = currentBuild.previousBuild.getEnvironment().get("GIT_COMMIT")
+                            }
+
+                            def changeSet = sh(script: "git diff --name-only ${previousCommit} ${currentCommit}", returnStdout: true).trim()
+
+                            if (changeSet) {
+                                changeSet = changeSet.split('\n')
+
+                                if (changeSet.any { it.startsWith("${env.API_GATEWAY_PATH}/") }) {
+                                    env.API_GATEWAY_CHANGED = 'true'
+                                }
+                                // if (changeSet.any { it.startsWith("${env.CATALOG_SERVICE_PATH}/") }) {
+                                //     env.CATALOG_SERVICE_CHANGED = 'true'
+                                // }
+                                if (changeSet.any { it.startsWith("${env.IDENTITY_SERVICE_PATH}/") }) {
+                                    env.IDENTITY_SERVICE_CHANGED = 'true'
+                                }
+                                if (changeSet.any { it.startsWith("${env.PROFILE_SERVICE_PATH}/") }) {
+                                    env.PROFILE_SERVICE_CHANGED = 'true'
+                                }
+                                if (changeSet.any { it.startsWith("${env.SERVICE_REGISTRY_PATH}/") }) {
+                                    env.SERVICE_REGISTRY_CHANGED = 'true'
+                                }
+                            } else {
+                                echo "No changes detected in the api-gateway directory."
+                                currentBuild.result = 'ABORTED'
+                                error("No changes detected in the api-gateway directory.")
+                            }
+                        } catch (Exception e) {
+                            echo "Error while checking for changes: ${it}"
+                            currentBuild.result = 'FAILURE'
+                            error("Error while checking for changes.")
                         }
 
-                        def changeSet = sh(script: "git diff --name-only ${previousCommit} ${currentCommit}", returnStdout: true).trim()
-
-                        if (changeSet) {
-                            changeSet = changeSet.split('\n')
-
-                            if (changeSet.any { it.startsWith("${env.API_GATEWAY_PATH}/") }) {
-                                env.API_GATEWAY_CHANGED = 'true'
-                            }
-                            // if (changeSet.any { it.startsWith("${env.CATALOG_SERVICE_PATH}/") }) {
-                            //     env.CATALOG_SERVICE_CHANGED = 'true'
-                            // }
-                            if (changeSet.any { it.startsWith("${env.IDENTITY_SERVICE_PATH}/") }) {
-                                env.IDENTITY_SERVICE_CHANGED = 'true'
-                            }
-                            if (changeSet.any { it.startsWith("${env.PROFILE_SERVICE_PATH}/") }) {
-                                env.PROFILE_SERVICE_CHANGED = 'true'
-                            }
-                            if (changeSet.any { it.startsWith("${env.SERVICE_REGISTRY_PATH}/") }) {
-                                env.SERVICE_REGISTRY_CHANGED = 'true'
-                            }
-                        } else {
-                            echo "No changes detected in the api-gateway directory."
-                            currentBuild.result = 'ABORTED'
-                            error("No changes detected in the api-gateway directory.")
-                        }
-                    } catch (Exception e) {
-                        echo "Error while checking for changes: ${it}"
-                        currentBuild.result = 'FAILURE'
-                        error("Error while checking for changes.")
-                    }
-
-                    // Set the environment variable to true if there are changes in the api-gateway directory
-                } 
+                        // Set the environment variable to true if there are changes in the api-gateway directory
+                    } 
+                }
             }
         }
      
