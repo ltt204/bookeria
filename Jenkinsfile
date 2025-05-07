@@ -134,7 +134,7 @@ pipeline {
                 //         sh '''
                 //             echo 'Building the Catalog Service...'
                 //         '''
-                //         dir "${env.CATALOG_SERVICE_PATH}" {
+                //         dir (env.CATALOG_SERVICE_PATH) {
                 //             sh '''
                 //                 echo 'Building the Catalog Service...'
                 //                 ./gradlew clean build
@@ -210,7 +210,7 @@ pipeline {
                         sh '''
                             echo 'Testing the API Gateway...'
                         ''' 
-                        dir "${env.API_GATEWAY_PATH}" {
+                        dir (env.API_GATEWAY_PATH) {
                             sh '''
                                 echo 'Running tests for the API Gateway...'
                                 ./gradlew check
@@ -219,7 +219,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit allowEmptyResults: true,  testResults:  "${env.API_GATEWAY_PATH}/target/surefire-reports/*.xml"
+                            junit allowEmptyResults: true,  testResults:  "${env.API_GATEWAY_PATH}/build/reports/testes/test/*.xml"
                         }
                     }
                 }
@@ -233,7 +233,7 @@ pipeline {
                 //         sh '''
                 //             echo 'Testing the Catalog Service...'
                 //         '''
-                //         dir "${env.CATALOG_SERVICE_PATH}" {
+                //         dir (env.CATALOG_SERVICE_PATH) {
                 //             sh '''
                 //                 echo 'Running tests for the Catalog Service...'
                 //                 ./gradlew check
@@ -242,7 +242,7 @@ pipeline {
                 //     }
                 //     post {
                 //         always {
-                //             junit allowEmptyResults: true,  testResults:  "${env.CATALOG_SERVICE_PATH}/target/surefire-reports/*.xml"
+                //             junit allowEmptyResults: true,  testResults:  "${env.CATALOG_SERVICE_PATH}/build/reports/testes/test/*.xml"
                 //         }
                 //     }
                 // }
@@ -256,7 +256,7 @@ pipeline {
                         sh '''
                             echo 'Testing the Identity Service...'
                         '''
-                        dir "${env.IDENTITY_SERVICE_PATH}" {
+                        dir (env.IDENTITY_SERVICE_PATH) {
                             sh '''
                                 echo 'Running tests for the Identity Service...'
                                 ./gradlew check
@@ -265,7 +265,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit allowEmptyResults: true,  testResults:  "${env.IDENTITY_SERVICE_PATH}/target/surefire-reports/*.xml"
+                            junit allowEmptyResults: true,  testResults:  "${env.IDENTITY_SERVICE_PATH}/build/reports/testes/test/*.xml"
                         }
                     }
                 }
@@ -279,7 +279,7 @@ pipeline {
                         sh '''
                             echo 'Testing the Profile Service...'
                         '''
-                        dir "${env.PROFILE_SERVICE_PATH}" {
+                        dir (env.PROFILE_SERVICE_PATH) {
                             sh '''
                                 echo 'Running tests for the Profile Service...'
                                 ./gradlew check
@@ -288,7 +288,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit allowEmptyResults: true,  testResults:  "${env.PROFILE_SERVICE_PATH}/target/surefire-reports/*.xml"
+                            junit allowEmptyResults: true,  testResults:  "${env.PROFILE_SERVICE_PATH}/build/reports/testes/test/*.xml"
                         }
                     }
                 }
@@ -302,7 +302,7 @@ pipeline {
                         sh '''
                             echo 'Testing the Service Registry...'
                         '''
-                        dir "${env.SERVICE_REGISTRY_PATH}" {
+                        dir (env.SERVICE_REGISTRY_PATH) {
                             sh '''
                                 echo 'Running tests for the Service Registry...'
                                 ./gradlew check
@@ -311,7 +311,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit allowEmptyResults: true,  testResults:  "${env.SERVICE_REGISTRY_PATH}/target/surefire-reports/*.xml"
+                            junit allowEmptyResults: true,  testResults:  "${env.SERVICE_REGISTRY_PATH}/build/reports/testes/test/*.xml"
                         }
                     }
                 } 
