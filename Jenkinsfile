@@ -20,12 +20,15 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out code...'
-                // Add your checkout commands here
-                sh '''
-                    echo 'Checking out the code from the repository...'
-                '''
                 checkout scm
                 sh "git fetch --all"
+                
+                // Initialize and update submodules
+                sh "git submodule init"
+                sh "git submodule update --recursive"
+                
+                // Check if submodule is properly checked out
+                sh "ls | grep gradlew"
             }
         }
 
