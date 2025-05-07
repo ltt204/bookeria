@@ -85,9 +85,14 @@ pipeline {
                                 error("No changes detected in the api-gateway directory.")
                             }
                         } catch (Exception e) {
-                            echo "Error while checking for changes: ${it}"
-                            currentBuild.result = 'FAILURE'
-                            error("Error while checking for changes.")
+                            echo "Error while checking for changes: ${e}"
+                            // Test all services for fallback
+                            env.API_GATEWAY_CHANGED = 'true'
+                            // env.CATALOG_SERVICE_CHANGED = 'true'
+                            env.IDENTITY_SERVICE_CHANGED = 'true'
+                            env.PROFILE_SERVICE_CHANGED = 'true'
+                            env.SERVICE_REGISTRY_CHANGED = 'true'
+                            echo "Forcing build for all services due to error: ${e}"
                         }
 
                         // Set the environment variable to true if there are changes in the api-gateway directory
