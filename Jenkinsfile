@@ -39,7 +39,7 @@ pipeline {
                 env.SERVICE_REGISTRY_CHANGED = 'false'
                 
                 // If first build, set the environment variable to true
-                if (params.FORCE_BUILD_ALL = true || currentBuild.previousBuild == null) {
+                if (params.FORCE_BUILD_ALL == true || currentBuild.previousBuild == null) {
                     env.API_GATEWAY_CHANGED = 'true'
                     // env.CATALOG_SERVICE_CHANGED = 'true'
                     env.IDENTITY_SERVICE_CHANGED = 'true'
