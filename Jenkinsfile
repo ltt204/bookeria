@@ -146,12 +146,12 @@ pipeline {
                     steps {
                         echo 'Building Identity Service...'
                         // Add your build commands here
-                        sh '''
-                            echo 'Building the Identity Service...'
-                        '''
                         dir(env.IDENTITY_SERVICE_PATH) {
-                            sh '''
+                             sh '''
                                 echo 'Building the Identity Service...'
+                                pwd
+                                ls -la
+                                chmod +x ./gradlew
                                 ./gradlew clean build
                             '''
                         }
