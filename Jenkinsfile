@@ -113,7 +113,7 @@ pipeline {
                         sh '''
                             echo 'Building the API Gateway...'
                         '''
-                        dir "${env.API_GATEWAY_PATH}" {
+                        dir(env.API_GATEWAY_PATH){
                             sh '''
                                 echo 'Building the API Gateway...'
                                 mvn clean package
@@ -149,7 +149,7 @@ pipeline {
                         sh '''
                             echo 'Building the Identity Service...'
                         '''
-                        dir "${env.IDENTITY_SERVICE_PATH}" {
+                        dir(env.IDENTITY_SERVICE_PATH) {
                             sh '''
                                 echo 'Building the Identity Service...'
                                 mvn clean package
@@ -167,7 +167,7 @@ pipeline {
                         sh '''
                             echo 'Building the Profile Service...'
                         '''
-                        dir "${env.PROFILE_SERVICE_PATH}" {
+                        dir(env.PROFILE_SERVICE_PATH) {
                             sh '''
                                 echo 'Building the Profile Service...'
                                 mvn clean package
@@ -185,7 +185,7 @@ pipeline {
                         sh '''
                             echo 'Building the Service Registry...'
                         '''
-                        dir "${env.SERVICE_REGISTRY_PATH}" {
+                        dir(env.SERVICE_REGISTRY_PATH) {
                             sh '''
                                 echo 'Building the Service Registry...'
                                 mvn clean package
