@@ -28,7 +28,7 @@ pipeline {
                 sh "git submodule update --recursive"
                 
                 // Check if submodule is properly checked out
-                sh "ls | grep gradlew"
+                sh "ls -la ${env.IDENTITY_SERVICE_PATH}"
             }
         }
 
