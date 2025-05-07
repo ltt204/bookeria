@@ -6,6 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.ltt204.profileservice.dto.request.address.AddressCreateRequestDto;
 import org.ltt204.profileservice.dto.request.country.CountryCreateRequestDto;
 import org.ltt204.profileservice.dto.request.userprofile.UserProfileCreateRequestDto;
+import org.ltt204.profileservice.dto.response.address.AddressDto;
+import org.ltt204.profileservice.dto.response.country.CountryDto;
 import org.ltt204.profileservice.dto.response.userprofile.UserProfileDetailDto;
 import org.ltt204.profileservice.entity.Address;
 import org.ltt204.profileservice.entity.Country;
@@ -23,9 +25,6 @@ class UserProfileServiceTest {
 
     private UserProfileCreateRequestDto userProfileCreateRequestDto;
     private UserProfileDetailDto userProfileDto;
-
-    private Address address;
-    private Country country;
 
     @BeforeEach
     void setUp() {
@@ -45,6 +44,20 @@ class UserProfileServiceTest {
                 .country(country)
                 .build();
 
+        var addressDto = AddressDto.builder()
+                .street("123 Main St")
+                .city("Anytown")
+                .ward("Ward 1")
+                .district("District 1")
+                .province("Province 1")
+                .country(CountryDto.builder()
+                        .countryName("Vietnam")
+                        .countryCode("VN")
+                        .zipCode("123124")
+                        .postalCode("123456")
+                        .build())
+                .build();
+
         userProfileCreateRequestDto = UserProfileCreateRequestDto.builder()
                 .firstName("john")
                 .lastName("doe")
@@ -55,17 +68,18 @@ class UserProfileServiceTest {
         userProfileDto = UserProfileDetailDto.builder()
                 .firstName("john")
                 .lastName("doe")
+                .address(addressDto)
                 .email("johndoe@test.example")
                 .build();
     }
 
     @Test
     void createUserProfile_validRequest_success() {
-        // GIVEN
-        var response = userProfileService.createUserProfile(userProfileCreateRequestDto);
-
         // WHEN
         when(userProfileService.createUserProfile(any())).thenReturn(userProfileDto);
+
+        // GIVEN
+        var response = userProfileService.createUserProfile(userProfileCreateRequestDto);
 
         // THEN
         assertThat(response.getEmail()).isEqualTo(userProfileDto.getEmail());
