@@ -116,7 +116,7 @@ pipeline {
                         dir(env.API_GATEWAY_PATH){
                             sh '''
                                 echo 'Building the API Gateway...'
-                                mvn clean package
+                                ./gradlew clean build
                             '''
                         }
                     }
@@ -134,7 +134,7 @@ pipeline {
                 //         dir "${env.CATALOG_SERVICE_PATH}" {
                 //             sh '''
                 //                 echo 'Building the Catalog Service...'
-                //                 mvn clean package
+                //                 ./gradlew clean build
                 //             '''
                 //         }
                 //     }
@@ -152,7 +152,7 @@ pipeline {
                         dir(env.IDENTITY_SERVICE_PATH) {
                             sh '''
                                 echo 'Building the Identity Service...'
-                                mvn clean package
+                                ./gradlew clean build
                             '''
                         }
                     }
@@ -170,7 +170,7 @@ pipeline {
                         dir(env.PROFILE_SERVICE_PATH) {
                             sh '''
                                 echo 'Building the Profile Service...'
-                                mvn clean package
+                                ./gradlew clean build
                             '''
                         }
                     }
@@ -188,7 +188,7 @@ pipeline {
                         dir(env.SERVICE_REGISTRY_PATH) {
                             sh '''
                                 echo 'Building the Service Registry...'
-                                mvn clean package
+                                ./gradlew clean build
                             '''
                         }
                     }
@@ -210,7 +210,7 @@ pipeline {
                         dir "${env.API_GATEWAY_PATH}" {
                             sh '''
                                 echo 'Running tests for the API Gateway...'
-                                mvn verify
+                                ./gradlew check
                             '''
                         }
                     }
@@ -233,7 +233,7 @@ pipeline {
                 //         dir "${env.CATALOG_SERVICE_PATH}" {
                 //             sh '''
                 //                 echo 'Running tests for the Catalog Service...'
-                //                 mvn verify
+                //                 ./gradlew check
                 //             '''
                 //         }
                 //     }
@@ -256,7 +256,7 @@ pipeline {
                         dir "${env.IDENTITY_SERVICE_PATH}" {
                             sh '''
                                 echo 'Running tests for the Identity Service...'
-                                mvn verify
+                                ./gradlew check
                             '''
                         }
                     }
@@ -279,7 +279,7 @@ pipeline {
                         dir "${env.PROFILE_SERVICE_PATH}" {
                             sh '''
                                 echo 'Running tests for the Profile Service...'
-                                mvn verify
+                                ./gradlew check
                             '''
                         }
                     }
@@ -302,7 +302,7 @@ pipeline {
                         dir "${env.SERVICE_REGISTRY_PATH}" {
                             sh '''
                                 echo 'Running tests for the Service Registry...'
-                                mvn verify
+                                ./gradlew check
                             '''
                         }
                     }
